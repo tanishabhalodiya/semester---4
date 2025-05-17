@@ -1,0 +1,241 @@
+db.Stock.createIndex({company:1})
+
+
+db.Stock.createIndex({sector:1,	sales:1})
+
+
+db.Stock.getIndexes()
+
+
+db.Stock.dropIndex({company:1})
+
+
+
+var cur1=db.Stock.find()
+while(cur1.hasNext()){
+printjson(cur1.next())
+}
+
+var cur1=db.Stock.find().limit(3)
+while(cur1.hasNext()){
+printjson(cur1.next())
+}
+
+
+
+
+var cur3 = db.Stock.find().sort({sales:-1});
+while(cur3.hasNext()) {  
+printjson(cur3.next());  
+}
+
+
+var cur4 = db.Stock.find().skip(2)
+while(cur4.hasNext()) {  
+printjson(cur4.next());  
+}
+
+
+var array = db.Stock.find().toArray()
+printjson(array);
+
+
+db.createCollection("Companies", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["company", "sector"],
+      properties: {
+        company: {
+          bsonType: "string",
+          description: "Company name must be a string and is required."
+        },
+        sector: {
+          bsonType: "string",
+          description: "Sector must be a string and is required."
+        }
+      }
+    }
+  }
+});
+
+
+------------part-b--------------------------------
+
+db.createCollection("Scripts", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["eps", "pe", "roe"],  // Required fields
+      properties: {
+        eps: {
+          bsonType: "double",
+        },
+        pe: {
+          bsonType: "double",
+        },
+        roe: {
+          bsonType: "double",
+        }
+      }
+    }
+  }
+});
+
+
+
+
+db.createCollection("Products", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["name", "price", "manufacturer", "categories"],
+      properties: {
+        name: {
+          bsonType: "string",
+          description: "Product name must be a string and is required."
+        },
+        price: {
+          bsonType: "double",
+          description: "Price must be a number and is required."
+        },
+        manufacturer: {
+          bsonType: "object",
+          required: ["name", "country", "establishedYear"],
+          properties: {
+            name: {
+              bsonType: "string",
+              description: "Manufacturer name must be a string and is required."
+            },
+            country: {
+              bsonType: "string",
+              description: "Manufacturer country must be a string and is required."
+            },
+            establishedYear: {
+              bsonType: "int",
+              description: "Established year must be an integer and is required."
+            }
+          }
+        },
+        categories: {
+          bsonType: "array",
+          minItems: 1,
+          items: {
+            bsonType: "string",
+            description: "Each category must be a string."
+          },
+          description: "Categories must be an array with at least one value."
+        }
+      }
+    }
+  },
+});
+
+
+
+
+
+---------------------------------------part-c------------------------------
+
+
+db.createCollection("financial_Reports", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["revenue"],
+      properties: {
+        revenue: {
+          bsonType: "double",
+          description: "Revenue must be a positive number and is required."
+        },
+        expenses: {
+          bsonType: "double",
+          description: "Expenses must be a number if provided."
+        },
+        netIncome: {
+          bsonType: "double",
+          description: "Net income must be a number if provided."
+        }
+      }
+    }
+  },
+});
+
+
+
+
+
+db.createCollection("Student", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["name", "address", "mobileNumber", "emailAddress"],
+      properties: {
+        name: {
+          bsonType: "object",
+          required: ["firstName", "lastName"],
+          properties: {
+            firstName: {
+              bsonType: "string",
+              description: "First name must be a string and is required."
+            },
+            lastName: {
+              bsonType: "string",
+              description: "Last name must be a string and is required."
+            }
+          }
+        },
+        address: {
+          bsonType: "object",
+          required: ["street", "city", "state", "zipCode"],
+          properties: {
+            street: {
+              bsonType: "string",
+             },
+            city: {
+              bsonType: "string",
+            },
+            state: {
+              bsonType: "string",
+            },
+            zipCode: {
+              bsonType: "string",
+              pattern: "^[0-9]{5}$",
+            }
+          }
+        },
+        mobileNumber: {
+          bsonType: "array",
+          minItems: 1,
+          items: {
+            bsonType: "string",
+          },
+        },
+        emailAddress: {
+          bsonType: "array",
+          minItems: 1,
+          items: {
+            bsonType: "string",
+            pattern: "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+            description: "Each email address must be a valid email format."
+          },
+          description: "Email address must be an array with at least one valid email."
+        }
+      }
+    }
+  },
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+

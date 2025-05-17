@@ -1,0 +1,196 @@
+-------------------------------lab-10------------------------
+
+-------------------part-a-------------------------------
+db.Student.updateOne({name:'John'},{$set :{age:31}})
+
+db.Student.updateMany({city:'New York'},{$set :{city : 'New Jersey'}})
+
+db.Student.updateMany({age:{$gt:35}},{$set :{isActive : false}})
+
+
+db.Student.updateMany({},{$inc:{age:1}})
+
+db.Student.updateMany({city:'Eva'},{$set:{city:'Cambridge'}})
+
+db.Student.updateMany({name:'Sophia'},{$set :{isActive:false}})
+
+
+db.Student.updateMany({age:{$lt : 30}},{$set :{city:'San Diego'}})
+
+
+db.Student.updateMany({},{$rename :{age:'years'}})
+
+
+db.Student.updateMany({name:'Nick'},{$set :{isActive:true}})
+
+db.Student.updateMany({},{$set :{country:'USA'}})
+
+db.Student.updateMany({name:'David'},{$set :{city:'Orlando'}})
+
+
+db.Student.updateMany({},{$mul :{age:2}})
+
+
+db.Student.updateMany({name:'Tom'},{$unset:{city:''}})
+
+db.Student.updateMany({},{$set :{premiumUser:false}},{age:{$gt : 30}},{$set:{premiumUser:true}})
+
+
+db.Student.updateMany({name:'Jane'},{$set :{isActive:true}})
+
+
+db.Student.updateMany({name:'Lucy'},{$set :{isActive:false}})
+
+
+db.Student.deleteOne({name:'Nick'})
+
+
+db.Student.deleteMany({isActive:false})
+
+db.Student.deleteMany({city:'New York'})
+
+db.Student.deleteMany({years:{$gt:35}})
+
+db.Student.deleteOne({name:'Olivia'})
+
+db.Student.deleteMany({years:{$lt:25}})
+
+db.Student.deleteOne({isActive:true})
+
+db.Student.deleteMany({city:'Los Angeles'})
+
+db.Student.deleteMany({city: {$exists : false}})
+
+db.Student.updateMany({},{$rename:{city:'location'}})
+
+db.Student.updateMany({name:'John'},{$rename:{name:'FullName'}})
+
+
+db.Student.updateMany({},{$rename:{isActive:'status'}})
+
+db.Student.updateMany({location:'San Francisco'},{$rename:{age:'yearsOld'}})
+
+db.createCollection('Employee',{capped:true,
+size:5120,
+max:100,
+validator:{
+$jsonSchema:{
+bsonType:'object',
+required:['Ecode','Ename'],
+properties:{
+Ecode: { bsonType:'int'},
+Ename: { bsonType : 'string'},
+Age: {bsonType : 'int'},
+City:{bsonType : 'string'}
+}
+}
+}})
+
+
+db.Employee.insertMany([
+{"Ecode": 1, "Ename": "John"} ,
+{"Ecode": 2, "Ename": "Jane", "Age": 25, "City": "Los Angeles"} ,
+{"Ecode": 3, "Ename": "Tom", "Age": 35}, 
+{"Ecode": 4, "Ename": "Lucy", "Age": 28, "City": "San Francisco", "isActive": true}])
+
+
+
+
+
+
+
+
+
+-----------------------------part---b----------------------------
+
+
+db.Student_data.find({$and:[{GENDER:'Female'},{CITY:'Rajkot'}]})
+
+db.Student_data.find({SEM :{$ne:3}})
+
+db.Student_data.find({CITY:{$in:['Jamnagar','Baroda']}})
+
+
+db.Student_data.find({CITY:'Baroda'}).limit(2)
+
+
+db.Student_data.find({$and:[{GENDER:'Male'},{CITY:'Rajkot'}]})
+
+db.Student_data.find({ROLLNO:{$lt:105}},{SNAME:1,CITY:1,FEES:1})
+
+
+db.Student_data.updateMany({$and:[{CITY:'Jamnagar'},{DEPARTMENT:'CE'}]},{$set:{CITY:'Surat'}})
+
+
+db.Student_data.updateMany({GENDER:{$ne:'Female'}},{$inc:{fees:500}})
+
+db.Student_data.updateMany({$and:[{DEPARTMENT:'EE'},{SEM:3}]},{$set:{DEPARTMENT:'Electrical'}})
+
+
+db.Student_data.updateMany({$and:[{GENDER:'Male'},{CITY:'Rajkot'}]},{$inc:{fees:100}})
+
+db.Student_data.updateMany({$and:[{Fess:{$lt:10000}},{SEM:3}]},{$set:{CITY:'Vadodara'}})
+
+db.Student_data.deleteMany({$or:[{CITY:'Ahmedabad'},{GENDER:'Male'}]})
+
+db.Student_data.deleteMany({ROLLNO:{$ne:[101,105,110]}})
+
+db.Student_data.deleteMany({$and:[{DEPARTMENT:'Civil'},{SEM:{$in:[5,7]}}]})
+
+
+db.Student_data.deleteMany({CITY:{$ne:['RAjkot','Baroda','Jamnagar']}})
+
+
+db.Student_data.deleteMany({ROLLNO:{$gte:105,$lte:108}})
+
+db.Student_data.updateMany({},{$rename:{City:'LOCATION'}})
+
+
+db.Student_data.updateMany({FEES:{$lt:10000}},{$rename:{DEPARTMENT:'Branch'}})
+
+db.Student_data.updateMany({ROLLNO:{$in:[106,107,108]}},{$rename:{SNAME:'Fullname'}})
+
+
+db.Student_data.updateMany({FEES:{$gt:9000}},{$rename:{FEES:'Tuition_Fees'}})
+
+
+db.Student_data.updateMany({$and:[{GENDER:'Female'},{FEES:15000}]},{$set:{DEPATMENT:'Major'}})
+
+db.Student_data.updateMany({$and:[{SEM:3},{DEPARTMENT:{$ne:'Mechanical'}}]},{$set:{CITY:'Hometown'}})
+
+
+
+-------------------part-c-----------------------------
+db.createCollection('logs',{capped:true,
+size:100000,
+max:10
+})
+
+
+
+db.logs.insertMany([
+{ message: "System started", level: "info", timestamp: new Date() }, 
+{ message: "Disk space low", level: "warning", timestamp: new Date() } ,
+{ message: "User login", level: "info", timestamp: new Date() } ,
+{ message: "System reboot", level: "info", timestamp: new Date() }, 
+{ message: "Error in module", level: "error", timestamp: new Date() }, 
+{ message: "Memory usage high", level: "warning", timestamp: new Date() }, 
+{ message: "User logout", level: "info", timestamp: new Date() } ,
+{ message: "File uploaded", level: "info", timestamp: new Date() }, 
+{ message: "Network error", level: "error", timestamp: new Date() }, 
+{ message: "Backup completed", level: "info", timestamp: new Date() }, 
+{ message: "Database error", level: "error", timestamp: new Date() } ,
+{ message: "Service started", level: "info", timestamp: new Date() } 
+])
+
+
+db.logs.insertMany([
+{ message: "New log entry 1", level: "info", timestamp: new Date() } ,
+{ message: "New log entry 2", level: "info", timestamp: new Date() } ,
+{ message: "New log entry 3", level: "info", timestamp: new Date() } ,
+{ message: "New log entry 4", level: "warning", timestamp: new Date() }, 
+{ message: "New log entry 5", level: "error", timestamp: new Date() }
+])
+
+
+

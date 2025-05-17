@@ -1,0 +1,239 @@
+db.Student.aggregate([
+  {$group:{_id:'$CITY'}}
+])
+
+
+db.Student.aggregate([
+  {$group:{_id:'$CITY',count:{$sum:1}}}
+])
+
+
+db.Student.aggregate([
+  {$group:{_id:null,totalFees:{$sum:'$FEES'}}}
+])
+
+
+db.Student.aggregate([
+  {$group:{_id:null,totalFees:{$avg:'$FEES'}}}
+])
+
+
+
+db.Student.aggregate([
+  {$group:{_id:null,MaxFees:{$max:'$FEES'},MinFees:{$min:'$FEES'}}}
+])
+
+
+db.Student.aggregate([
+  {$group:{_id:'$CITY',totalFees:{$sum:'$FEES'}}}
+])
+
+
+db.Student.aggregate([
+  {$group:{_id:'$GENDER',maxFees:{$max:'$FEES'}}}
+])
+
+
+
+db.Student.aggregate([
+  {$group:{_id:'$CITY',maxFees:{$max:'$FEES'},minFees:{$min:'$FEES'}}}
+])
+
+
+
+db.Student.aggregate([
+  {$match:{CITY:'Baroda'}},
+  {$group:{_id:'$CITY',count:{$sum:1}}}
+])
+
+
+db.Student.aggregate([
+  {$match:{CITY:'Rajkot'}},
+  {$group:{_id:'$CITY',avgFees:{$avg:'$FEES'}}}
+])
+
+
+db.Student.aggregate([
+  {$group:{_id:{DEPARTMENT:'$DEPARTMENT',GENDER:'$GENDER',count:{$sum:1}}}}
+	
+])
+
+
+
+db.Student.aggregate([
+  {$group:{_id:'$DEPARTMENT',totalFees:{$sum:'$FEES'}}}
+])
+
+
+
+db.Student.aggregate([
+  {$group:{_id:{DEPARTMENT:'$DEPARTMENT',GENDER:'$GENDER',minFees:{$min:'$FEES'}}}}
+	
+])
+
+
+
+
+db.Student.aggregate([
+  {$sort:{FEES:-1}},
+  {$limit:5}
+])
+
+
+
+db.Student.aggregate([
+  {$group:{_id:'$CITY',avgFees:{$avg:'$FEES'},count:{$sum:1}}},
+  {$match:{count:{$gt:1}}}
+])
+
+
+
+--------db.Student.aggregate([
+{$match:{DEPARTMENT:{$in:['CE','Mechanical']}}},
+  {$group:{_id:'$DEPARTMENT',totalFees:{$sum:'$FEES'}}}
+])
+
+
+
+db.Student.aggregate([
+  {$match:{CITY:'Rajkot'}},
+  {$group:{_id:'$DEPARTMENT',avgFees:{$avg:'$FEES'}}}
+])
+
+
+
+db.Student.aggregate([
+  {$group:{_id:{DEPARTMENT:'$DEPARTMENT',GENDER:'$GENDER',count:{$sum:1}}}}
+])
+
+
+
+db.Student.aggregate([
+  {$group:{_id:'$SEM',avgFees:{$avg:'$FEES'},totalFees:{$sum:'$FEES'}}},
+  {$sort:{totalFees:-1}}
+])
+
+
+db.Student.aggregate([
+  {$group:{_id:'$CITY',totalFees:{$sum:'$FEES'}}},
+  {$sort:{totalFees:-1}},
+  {$limit:3}
+])
+
+
+
+---------------------part-b---------------------------
+
+db.Stock.aggregate([{$group:{_id:null,TotalSales:{$sum:'$sales'}}}])
+
+
+
+db.Stock.aggregate([{$group:{_id:'$sector',avgProfit:{$avg:'$profit'}}}])
+
+
+
+db.Stock.aggregate([{$group:{_id:'$sector',companies:{$sum:1}}}])
+
+
+db.Stock.aggregate([{$group:{_id:null,highPE:{$max:'$pe'}}}])
+
+
+
+db.Stock.aggregate([{$match:{'sales':{$gt:250000}}},{$group:{_id:null,totalProfit:{$sum:'$profit'}}},])
+
+
+db.Stock.aggregate([{$project:{'company':1,'profit':1}}])
+------10 mo baki=============hook up thi krvanuuu
+
+db.Stock.aggregate([
+  {$group:{_id:'$sector',maxSale:{$max:'$sales'}}}
+])
+
+
+db.Stock.aggregate([
+  {$group:{_id:'$sector',totalSales:{$sum:'$sales'},totalProfit:{$sum:'$profit'}}}
+])
+
+
+db.Stock.aggregate([
+  {$sort:{'profit':-1}}
+])
+
+
+
+db.Stock.aggregate([
+  {$group:{_id:null,avgROE:{$avg:'$roe'}}}
+])
+
+
+db.Stock.aggregate([
+  {$group:{_id:'$sector',maxEPS:{$max:'$eps'},minEPS:{$min:'$eps'}}}
+])
+
+
+db.Stock.aggregate([
+  {$match:{profit:{$gt:30000}}},
+  {$group:{_id:'$company',count:{$sum:1}}}
+])
+
+
+
+
+db.Stock.aggregate([
+  {$group:{_id:'$sector',totalProfit:{$sum:'$profit'}}},
+  {$sort:{'totalProfit':-1}}
+])
+
+db.Stock.find().sort({ sales: -1 }).limit(3)
+
+
+
+db.Stock.aggregate([
+  {$group:{_id:'$sector',avgPE:{$avg:'$pe'}}}
+])
+
+
+db.Stock.aggregate([
+  {$group:{_id:'$company',sumFees:{$sum:'$sales'},sumProfit:{$sum:'$profit'}}}
+])
+
+
+db.Stock.aggregate([
+  {$match:{'sales':{$lt:400000}}},
+  {$sort:{'sales':1}}
+])
+
+
+
+db.Stock.aggregate([
+  {$group:{_id:'$sector',toalCompany:{$sum:1}}}
+])
+
+
+db.Stock.aggregate([
+  {$match:{'sales':{$gt:200000}}},
+  {$group:{_id:'$sector',avgROE:{$avg:'$roe'}}}
+])
+
+
+
+db.Stock.aggregate([
+  {$group:{_id:'$sector',maxProfit:{$max:'$profit'}}}
+])
+
+
+db.Stock.aggregate([
+  {$group:{_id:'$sector',totalSales:{$sum:'$sales'},count:{$sum:1}}}
+])
+
+
+db.Stock.aggregate([
+  { $match: { "profit": { $gt: 20000 } } },
+  { $project: { "company": 1, "profit": 1, "_id": 0 } }
+])
+
+
+db.Stock.aggregate([
+  { $sort: { "ROE": 1 } }, 
+  { $project: { "company": 1, "ROE": 1, "_id": 0 } }   ])
+
